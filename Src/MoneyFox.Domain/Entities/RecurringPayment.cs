@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 namespace MoneyFox.Domain.Entities
 {
@@ -16,7 +15,6 @@ namespace MoneyFox.Domain.Entities
         {
         }
 
-        [SuppressMessage("Major Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>")]
         public RecurringPayment(DateTime startDate,
                                 decimal amount,
                                 PaymentType type,
