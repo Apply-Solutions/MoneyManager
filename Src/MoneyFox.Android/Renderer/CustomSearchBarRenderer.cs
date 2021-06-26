@@ -39,6 +39,8 @@ namespace MoneyFox.Droid.Renderer
                     searchView.Iconified = false;
                     searchView.SetIconifiedByDefault(false);
 
+                    SetBackgroundColor(searchView);
+
                     EditText editText = Control.GetChildrenOfType<EditText>().First();
 
                     editText.SetHighlightColor(Color.Accent.ToAndroid());
@@ -59,6 +61,21 @@ namespace MoneyFox.Droid.Renderer
             catch(Exception ex)
             {
                 Crashes.TrackError(ex);
+            }
+        }
+
+        private void SetBackgroundColor(SearchView searchView)
+        {
+
+            if(App.Current.UserAppTheme == OSAppTheme.Dark)
+            {
+                App.Current.Resources.TryGetValue("BackgroundColorSearchBarDark", out object darkTintColor);
+                searchView.SetBackgroundColor(((Color)darkTintColor).ToAndroid());
+            }
+            else
+            {
+                App.Current.Resources.TryGetValue("BackgroundColorSearchBarLight", out object lightTintColor);
+                searchView.SetBackgroundColor(((Color)lightTintColor).ToAndroid());
             }
         }
 
