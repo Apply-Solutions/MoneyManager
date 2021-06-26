@@ -19,7 +19,7 @@ variables:
   buildConfiguration: 'Release'
   appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
   Major: '7'
-  Minor: '4'
+  Minor: '5'
 
 jobs:
 - job: BuildWindows
@@ -27,7 +27,7 @@ jobs:
   timeoutInMinutes: 200
 
   steps:
-  
+
   - task: DownloadSecureFile@1
     displayName: 'Download secure file'
     name: 'signingCert'
