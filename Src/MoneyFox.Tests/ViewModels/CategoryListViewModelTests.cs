@@ -2,6 +2,7 @@
 using FluentAssertions;
 using MediatR;
 using MoneyFox.Application.Categories.Queries.GetCategoryBySearchTerm;
+using MoneyFox.Application.Common.Interfaces;
 using MoneyFox.Domain.Entities;
 using MoneyFox.Ui.Shared.ViewModels.Categories;
 using MoneyFox.ViewModels.Categories;
@@ -18,11 +19,13 @@ namespace MoneyFox.Tests.ViewModels
     {
         private readonly IMediator mediator;
         private readonly IMapper mapper;
+        private readonly IDialogService dialogService;
 
         public CategoryListViewModelTests()
         {
             mediator = Substitute.For<IMediator>();
             mapper = Substitute.For<IMapper>();
+            dialogService = Substitute.For<IDialogService>();
         }
 
         [Fact]
@@ -30,7 +33,7 @@ namespace MoneyFox.Tests.ViewModels
         {
             // Arrange
             // Act
-            var viewModel = new CategoryListViewModel(mediator, mapper);
+            var viewModel = new CategoryListViewModel(mediator, mapper, dialogService);
 
             // Assert
             viewModel.Categories.Should().NotBeNull();
@@ -44,7 +47,7 @@ namespace MoneyFox.Tests.ViewModels
             {
                 new CategoryViewModel { Name = "asdf" }
             });
-            var viewModel = new CategoryListViewModel(mediator, mapper);
+            var viewModel = new CategoryListViewModel(mediator, mapper, dialogService);
 
             // Act
             await viewModel.InitializeAsync();
