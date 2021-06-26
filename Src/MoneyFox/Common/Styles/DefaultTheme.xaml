@@ -31,6 +31,9 @@
     <!-- Theme Colors -->
     <Color x:Key="BackgroundColorDark">#121212</Color>
     <Color x:Key="BackgroundColorLight">#EFF2F5</Color>
+    
+    <Color x:Key="BackgroundColorSearchBarDark">#323130</Color>
+    <Color x:Key="BackgroundColorSearchBarLight">#EFF2F5</Color>
 
     <Color x:Key="TextPrimaryColor_Dark">#FFFFFF</Color>
     <Color x:Key="TextPrimaryColor_Light">#323130</Color>

@@ -21,16 +21,14 @@ namespace MoneyFox.iOS.Renderer
 
             if(App.Current.UserAppTheme == OSAppTheme.Dark)
             {
-                searchBar.BarStyle = UIBarStyle.Black;
-
-                App.Current.Resources.TryGetValue("BackgroundColorDark", out object darkTintColor);
+                App.Current.Resources.TryGetValue("BackgroundColorSearchBarDark", out object darkTintColor);
                 searchBar.BarTintColor = ((Color)darkTintColor).ToUIColor();
             }
             else
             {
                 searchBar.BarStyle = UIBarStyle.Default;
 
-                App.Current.Resources.TryGetValue("BackgroundColorLight", out object lightTintColor);
+                App.Current.Resources.TryGetValue("BackgroundColorSearchBarLight", out object lightTintColor);
                 searchBar.BarTintColor = ((Color)lightTintColor).ToUIColor();
             }
 
