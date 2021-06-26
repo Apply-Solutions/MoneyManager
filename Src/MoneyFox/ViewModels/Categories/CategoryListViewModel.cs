@@ -2,8 +2,11 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MediatR;
+using MoneyFox.Application.Categories.Command.DeleteCategoryById;
 using MoneyFox.Application.Categories.Queries.GetCategoryBySearchTerm;
+using MoneyFox.Application.Common.Interfaces;
 using MoneyFox.Application.Common.Messages;
+using MoneyFox.Application.Resources;
 using MoneyFox.Extensions;
 using MoneyFox.Ui.Shared.Groups;
 using MoneyFox.Ui.Shared.ViewModels.Categories;
@@ -22,11 +25,13 @@ namespace MoneyFox.ViewModels.Categories
 
         private readonly IMediator mediator;
         private readonly IMapper mapper;
+        private readonly IDialogService dialogService;
 
-        public CategoryListViewModel(IMediator mediator, IMapper mapper)
+        public CategoryListViewModel(IMediator mediator, IMapper mapper, IDialogService dialogService)
         {
             this.mediator = mediator;
             this.mapper = mapper;
+            this.dialogService = dialogService;
         }
 
         public void Subscribe()
@@ -78,5 +83,22 @@ namespace MoneyFox.ViewModels.Categories
         public RelayCommand<CategoryViewModel> GoToEditCategoryCommand
             => new RelayCommand<CategoryViewModel>(async (categoryViewModel)
                 => await Shell.Current.Navigation.PushModalAsync(new NavigationPage(new EditCategoryPage(categoryViewModel.Id)) { BarBackgroundColor = Color.Transparent }));
+
+
+        public RelayCommand<CategoryViewModel> DeleteCategoryCommand
+            => new RelayCommand<CategoryViewModel>(async (categoryViewModel)
+                => await DeleteAccountAsync(categoryViewModel));
+
+        private async Task DeleteAccountAsync(CategoryViewModel categoryViewModel)
+        {
+            if(await dialogService.ShowConfirmMessageAsync(Strings.DeleteTitle,
+                Strings.DeleteCategoryConfirmationMessage,
+                Strings.YesLabel,
+                Strings.NoLabel))
+            {
+                await mediator.Send(new DeleteCategoryByIdCommand(categoryViewModel.Id));
+                await SearchCategoryAsync();
+            }
+        }
     }
 }

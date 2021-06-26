@@ -16,7 +16,7 @@
         <Grid>
             <Button
                 Style="{StaticResource PrimaryButton}"
-                Margin="0,0,5,0"
+                Margin="{OnPlatform iOS='0,0,65,0', Default='0,0,15,0'}"
                 Padding="0"
                 BorderWidth="0"
                 FontFamily="FontAwesome"
@@ -72,9 +72,7 @@
                                         CommandParameter="{Binding .}" />
                             </Grid.GestureRecognizers>
 
-                            <yummy:PancakeView BackgroundColor="{AppThemeBinding Dark={StaticResource CardBackgroundDark},
-                                                                                 Light={StaticResource CardBackgroundLight}}"
-                                               CornerRadius="10"
+                            <yummy:PancakeView CornerRadius="10"
                                                HeightRequest="45"
                                                HorizontalOptions="FillAndExpand">
 
@@ -82,13 +80,30 @@
                                         <yummy:DropShadow />
                                     </yummy:PancakeView.Shadow>
 
-                                    <Grid>
-                                    <Label Style="{StaticResource TextHead}"
-                                            Margin="10,0,10,0"
-                                            VerticalTextAlignment="Center"
-                                            HorizontalTextAlignment="Start"
-                                            Text="{Binding Name}" />
-                                    </Grid>
+                                    <SwipeView>
+
+                                        <SwipeView.RightItems>
+                                            <SwipeItems>
+                                                <SwipeItem
+                                                    Command="{Binding Source={x:Reference CategoryCollectionView}, Path=BindingContext.GoToEditCategoryCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="{x:Static resources:Strings.EditLabel}" />
+                                                <SwipeItem
+                                                    Command="{Binding Source={x:Reference CategoryCollectionView}, Path=BindingContext.DeleteCategoryCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Text="{x:Static resources:Strings.DeleteLabel}" />
+                                            </SwipeItems>
+                                        </SwipeView.RightItems>
+
+                                        <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource CardBackgroundDark},
+                                                                                Light={StaticResource CardBackgroundLight}}">
+                                        <Label Style="{StaticResource TextHead}"
+                                                Margin="10,0,10,0"
+                                                VerticalTextAlignment="Center"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding Name}" />
+                                        </Grid>
+                                    </SwipeView>
                                 </yummy:PancakeView>
                         </Grid>
                     </DataTemplate>
