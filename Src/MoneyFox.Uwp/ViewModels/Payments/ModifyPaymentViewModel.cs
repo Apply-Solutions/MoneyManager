@@ -274,16 +274,20 @@ namespace MoneyFox.Uwp.ViewModels.Payments
                 return;
             }
 
+            if(SelectedPayment.IsRecurring && !SelectedPayment.RecurringPayment!.IsEndless
+                                           && SelectedPayment.RecurringPayment.EndDate != null
+                                           && SelectedPayment.RecurringPayment.EndDate < DateTime.Now)
+            {
+                await dialogService.ShowMessageAsync(Strings.InvalidEnddateTitle, Strings.InvalidEnddateMessage);
+                return;
+            }
+
             try
             {
                 await dialogService.ShowLoadingDialogAsync(Strings.SavingPaymentMessage);
                 await SavePaymentAsync();
                 MessengerInstance.Send(new ReloadMessage());
                 navigationService.GoBack();
-            }
-            catch(InvalidEndDateException)
-            {
-                await dialogService.ShowMessageAsync(Strings.InvalidEnddateTitle, Strings.InvalidEnddateMessage);
             }
             catch(Exception ex)
             {

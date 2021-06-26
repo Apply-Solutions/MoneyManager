@@ -43,7 +43,9 @@ namespace MoneyFox.ViewModels.Payments
 
             if(SelectedPayment.IsRecurring && SelectedPayment.RecurringPayment != null)
             {
-                payment.AddRecurringPayment(SelectedPayment.RecurringPayment.Recurrence, SelectedPayment.RecurringPayment.EndDate);
+                payment.AddRecurringPayment(SelectedPayment.RecurringPayment.Recurrence, SelectedPayment.RecurringPayment.IsEndless
+                        ? null
+                        : SelectedPayment.RecurringPayment.EndDate);
             }
 
             await mediator.Send(new CreatePaymentCommand(payment));
