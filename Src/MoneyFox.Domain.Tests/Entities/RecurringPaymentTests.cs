@@ -105,7 +105,7 @@ namespace MoneyFox.Domain.Tests.Entities
         }
 
         [Fact]
-        public void Ctor_EndDatePast_Exception()
+        public void ShouldThrowAnExceptionWhenDateInvalid()
         {
             // Arrange
             // Act / Assert
@@ -116,6 +116,57 @@ namespace MoneyFox.Domain.Tests.Entities
                                                                               new Account("Foo"),
                                                                               "note",
                                                                               DateTime.Today.AddDays(-1)));
+        }
+
+        [Fact]
+        public void ShouldNotThrowExceptionWhenIsEndlessWithNullDateOnCtor()
+        {
+            // Arrange
+            // Act
+            var payment = new RecurringPayment(DateTime.Now,
+                                 123,
+                                 PaymentType.Expense,
+                                 PaymentRecurrence.Daily,
+                                 new Account("Foo"),
+                                 "note",
+                                 null);
+
+            // Assert
+            payment.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ShouldNotThrowExceptionWhenIsEndlessWithNullOnUpdate()
+        {
+            // Arrange
+            var payment = new RecurringPayment(DateTime.Now,
+                                 123,
+                                 PaymentType.Expense,
+                                 PaymentRecurrence.Daily,
+                                 new Account("Foo"),
+                                 "note");
+            // Act
+            payment.UpdateRecurringPayment(111, PaymentRecurrence.Daily, payment.ChargedAccount, endDate: null);
+
+            // Assert
+            payment.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ShouldNotThrowExceptionWhenIsEndlessWithMinDateOnUpdate()
+        {
+            // Arrange
+            var payment = new RecurringPayment(DateTime.Now,
+                                 123,
+                                 PaymentType.Expense,
+                                 PaymentRecurrence.Daily,
+                                 new Account("Foo"),
+                                 "note");
+            // Act
+            payment.UpdateRecurringPayment(111, PaymentRecurrence.Daily, payment.ChargedAccount, endDate: DateTime.MinValue);
+
+            // Assert
+            payment.Should().NotBeNull();
         }
 
         [Fact]
