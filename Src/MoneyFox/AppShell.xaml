@@ -96,6 +96,6 @@
         </Tab>
     </FlyoutItem>
 
-    <ShellContent Route="WelcomePage" Shell.FlyoutBehavior="Disabled" ContentTemplate="{DataTemplate setup:WelcomePage}" />
+    <ShellContent Route="WelcomePage" IsVisible="False" Shell.FlyoutBehavior="Disabled" ContentTemplate="{DataTemplate setup:WelcomePage}" />
 
 </Shell>
